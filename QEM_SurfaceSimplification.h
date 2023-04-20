@@ -50,30 +50,12 @@ public:
 
 	// threshold for find pairs (this is the threshold squered)
 	float hSqr;
-	//todo make a struct for valid pair!
-	/*struct validPair
-	{
-		unsigned index1;
-		unsigned index2;
-		std::pair<unsigned, unsigned> vp;
-	};*/
-	//std::vector<std::pair<unsigned, unsigned>> validPairs;
 
 	// a heap based on cost. the first float is the cost the the second pair is the valid pair 
 	std::vector<std::pair<float, std::pair<unsigned, unsigned>>> costHeap;
 
-
-	/*
-	 * TEEEEEEEEEEEEEEEEEMP
-	 */
-
 	 // // a map from vertex index to the index of vertices which are neighbour with this
 	std::map<unsigned, std::set<unsigned>> neighbours;
-
-	
-
-	// // map from vertex index to index of valid paris that this vertex occured
-	// std::map<unsigned, std::vector<unsigned>> occuredVertexInValidPairs; 
 };
 
 

@@ -20,10 +20,13 @@ QEM_SurfaceSimplification::QEM_SurfaceSimplification(
 	hSqr = 0.05 * 0.05;
 
 	ComputePlaneArray();
+
 	//Compute the Q matrices for all the initial vertices.
 	ComputeQMatrix();
+
 	//Select all valid pairs
 	ComputeValidPairs();
+
 	/*
 	 Compute the optimal contraction target v� for each valid pair
 	(v1, v2).The error v�T(Q1 + Q2)v� of this target vertex becomes
@@ -45,10 +48,13 @@ void QEM_SurfaceSimplification::SetVariables(std::vector<std::array<unsigned, 6>
 	hSqr = 0.01 * 0.01;
 
 	ComputePlaneArray();
+
 	//Compute the Q matrices for all the initial vertices.
 	ComputeQMatrix();
+
 	//Select all valid pairs
 	ComputeValidPairs();
+
 	/*
 	 Compute the optimal contraction target v� for each valid pair
 	(v1, v2).The error v�T(Q1 + Q2)v� of this target vertex becomes
@@ -74,10 +80,8 @@ void QEM_SurfaceSimplification::Simplify(int itrNum)
 	std::cout << "Removing " << faces.size() - itrNum << " Faces" << std::endl;
 	std::cout << "Simplifying " << std::endl;
 
-
 	while (faces.size() > itrNum)
 	{
-		//std::cout << "current face: " << faces.size() << std::endl;
 		//  Place all the pairs in a heap keyed on cost with the minimum cost pair at the top.
 		std::pair<float, std::pair<unsigned, unsigned>> leastCost = costHeap.front();
 		std::pair<unsigned, unsigned> leastCostVertex = leastCost.second;
@@ -90,7 +94,7 @@ void QEM_SurfaceSimplification::Simplify(int itrNum)
 			if (validPairs[i].first == leastCostVertex.first && validPairs[i].second == leastCostVertex.second)
 			{
 				validPairs.erase(std::next(validPairs.begin(), i));
-				break;
+				break; 
 			}
 		}
 
@@ -160,12 +164,7 @@ void QEM_SurfaceSimplification::Simplify(int itrNum)
 
 
 	}
-
-
 	std::cout << "Simplifying Ended" << std::endl;
-
-
-
 }
 
 float QEM_SurfaceSimplification::ComputeSingleCost(FW::Vec4f v, FW::Mat4f Q)
@@ -243,18 +242,11 @@ FW::Vec4f QEM_SurfaceSimplification::FindNewLocation(unsigned v1, unsigned v2, F
 
 void QEM_SurfaceSimplification::ComputeValidPairs()
 {
-	//unsigned i = 0;
 	for (auto& face : faces)
 	{
 		validPairs.emplace_back(face[0], face[2]);
 		validPairs.emplace_back(face[2], face[4]);
-		//occuredVertexInValidPairs[face[0]].push_back(i);
-		//occuredVertexInValidPairs[face[2]].push_back(i);
-		//i++;
 		validPairs.emplace_back(face[4], face[0]);
-		//occuredVertexInValidPairs[face[0]].push_back(i);
-		//occuredVertexInValidPairs[face[4]].push_back(i);
-		//i++;
 	}
 	int k = 0;
 	for (int i = 0; i < positions.size(); i++)
